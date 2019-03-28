@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraControl : MonoBehaviour {
-
-    public enum CameraState { FirstPerson, ThirdPerson};
+    public enum CameraState { FirstPerson, ThirdPerson };
     public CameraState cameraState = CameraState.FirstPerson;
     Camera playerCam;
     PlayerControl playerControl;
@@ -13,11 +12,11 @@ public class CameraControl : MonoBehaviour {
     public Vector3 cameraOffset = new Vector3(0.75f, 1.25f, 0f);
 
 
-    public void Start () {
+    public void Start() {
         playerCam = GetComponentInChildren<Camera>();
         playerControl = GetComponent<PlayerControl>();
         Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;        
+        Cursor.lockState = CursorLockMode.Locked;
         UpdateCameraPosition();
         cameraDistance = (cameraState == CameraState.ThirdPerson) ? 1 : 0;
     }
@@ -40,8 +39,7 @@ public class CameraControl : MonoBehaviour {
         if (Input.GetKey(KeyCode.Escape)) {
             if (Cursor.lockState == CursorLockMode.Locked) {
                 Cursor.lockState = CursorLockMode.None;
-            }
-            else {
+            } else {
                 Cursor.lockState = CursorLockMode.Locked;
             }
         }
@@ -50,7 +48,7 @@ public class CameraControl : MonoBehaviour {
 
     void UpdateCameraPosition() {
 
-        switch(cameraState) {
+        switch (cameraState) {
             case CameraState.FirstPerson:
                 FirstPersonCameraUpdate(playerCam);
                 break;
@@ -70,7 +68,7 @@ public class CameraControl : MonoBehaviour {
 
     void FirstPersonCameraUpdate(Camera playerCamera) {
 
-        MeshRenderer playerMesh =  GetComponent<MeshRenderer>();
+        MeshRenderer playerMesh = GetComponent<MeshRenderer>();
         if (playerMesh.enabled) {
             playerMesh.enabled = false;
             foreach (MeshRenderer mesh in GetComponentsInChildren<MeshRenderer>()) {
@@ -95,7 +93,7 @@ public class CameraControl : MonoBehaviour {
                 mesh.enabled = true;
             }
         }
-        
+
         // Vertical rotation
         playerCam.transform.Rotate(Input.GetAxisRaw("Mouse Y") * playerControl.rotationSpeed * Vector3.left * Time.deltaTime);
 
@@ -120,6 +118,4 @@ public class CameraControl : MonoBehaviour {
     float AngleClamp(float angle, float min, float max) {
         return Mathf.Clamp(angle > 180f ? angle - 360f : angle, min, max);
     }
-
-
 }

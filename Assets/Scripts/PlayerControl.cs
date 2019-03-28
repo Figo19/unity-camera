@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerControl : MonoBehaviour {
-
-    
     public float movementSpeed = 1f;
     public float rotationSpeed = 1f;
     Rigidbody rb;
